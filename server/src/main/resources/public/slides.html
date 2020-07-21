@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event-based online game in Scala</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+      .example { background-color:#0f0f12; color:#dfeaf2; }
+      .gifs img {
+        zoom: 40%;
+        display:block;
+        margin-left: auto;
+        margin-right: auto;
+       }
+      .images img {
+        display:block;
+        margin-left: auto;
+        margin-right: auto;
+       }
+    </style>
+</head>
+<body>
+<script type="text/javascript" src="./client.js"></script>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@8.4.0/dist/mermaid.min.js">
+
+</script>
+<script>
+  var slideshow = remark.create({
+    sourceUrl: 'slides.md',
+    highlightStyle: 'monokai',
+    highlightLanguage: 'remark',
+    highlightLines: true});
+  mermaid.initialize({
+    startOnLoad: false,
+    cloneCssStyles: false,
+    theme: 'forest',
+    flowchart:{useMaxWidth:true, useMaxHeight:true}
+  });
+function initMermaid(s) {
+  var diagrams = document.querySelectorAll('.mermaid');
+  var i;
+  for(i=0;i<diagrams.length;i++){
+    if(diagrams[i].offsetWidth>0){
+      mermaid.init(undefined, diagrams[i]);
+    }
+  }
+}
+slideshow.on('afterShowSlide', initMermaid);
+slideshow.on('afterShowSlide', function(slide) { GameClient.startForSlide(slide.getSlideIndex() + 1) });
+slideshow.on('afterHideSlide', function() { GameClient.stop() });
+initMermaid(slideshow.getSlides()[slideshow.getCurrentSlideIndex()]);
+</script>
+</body>
+</html>
