@@ -137,7 +137,7 @@ object GameClient {
 
   def loadImg(name: String): IO[dom.html.Image] = IO.async { cb =>
       val img = dom.document.createElement("img").asInstanceOf[dom.html.Image]
-      img.src = s"/images/$name.png"
+      img.src = s"images/$name.png"
       img.onload = (_: dom.Event) => cb(Right(img))
     }
 
