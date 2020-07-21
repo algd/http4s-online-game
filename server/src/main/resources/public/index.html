@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Game example</title>
+</head>
+<body style="background-color:#0f0f12; color:#dfeaf2; text-align: center;">
+<!-- Include Scala.js compiled code -->
+<script type="text/javascript" src="./client.js"></script>
+<br/>
+<h2>WebSocket Game Test</h2>
+<div id="connectForm">
+    Name:
+    <input id="name" type="text"/>
+    <button onclick="connect()">Connect</button>
+</div>
+<br/>
+<div id="game"></div>
+Move: WASD - Throw bomb: O
+<div id="output" style="text-align: left;"></div>
+<script type="text/javascript">
+function connect() {
+    GameClient.start(document.getElementById('name').value)
+    document.body.removeChild(document.getElementById('connectForm'))
+}
+</script>
+</body>
+</html>
