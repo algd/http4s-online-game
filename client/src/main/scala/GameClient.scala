@@ -172,9 +172,10 @@ object GameClient {
     _.through(Utils.toJson).evalTap(msg => writeToScreen("✉️➡️ " + msg))
 
   val wsUri = dom.window.location.host + "/ws"
+  val wsProtocol = if (dom.window.location.protocol == "https:") "wss" else "ws"
 
   def webSocketClient(name: String): IO[(Stream[IO, String], Pipe[IO, String, Unit])] =
-    WebSocketClient.build[IO](s"ws://$wsUri?name=$name").map { case (receivedMessages, sendMessage) =>
+    WebSocketClient.build[IO](s"$wsProtocol://$wsUri?name=$name").map { case (receivedMessages, sendMessage) =>
       import WebSocketClient._
       val onlyText = receivedMessages.evalMap {
         case Connected =>

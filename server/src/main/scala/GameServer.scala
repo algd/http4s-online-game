@@ -67,9 +67,11 @@ class GameServerImpl[F[_]](
       StaticFile.fromResource("/public/index.html", blocker, Some(request)).getOrElseF(NotFound())
   }
 
+  val port = Option(System.getenv("PORT")).fold(8080)(_.toInt)
+
   def stream: Stream[F, ExitCode] =
     BlazeServerBuilder[F](global)
-      .bindHttp(8080, "0.0.0.0")
+      .bindHttp(port, "0.0.0.0")
       .withHttpApp(routes.orNotFound)
       .serve
 }
